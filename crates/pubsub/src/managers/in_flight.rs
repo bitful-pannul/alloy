@@ -57,6 +57,7 @@ impl InFlight {
     pub(crate) fn fulfill(self, resp: Response) -> Option<(SubId, Self)> {
         if self.is_subscription() {
             if let ResponsePayload::Success(val) = resp.payload {
+                println!("fullfil value {:?}", val);
                 let sub_id: serde_json::Result<SubId> = serde_json::from_str(val.get());
                 return match sub_id {
                     Ok(alias) => Some((alias, self)),
