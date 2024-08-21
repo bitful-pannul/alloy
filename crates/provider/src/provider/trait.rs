@@ -855,12 +855,14 @@ pub trait Provider<T: Transport + Clone = BoxTransport, N: Network = Ethereum>:
     {
         self.root().pubsub_frontend()?;
         let id = self.client().request("eth_subscribe", params).await?;
+        println!("got subscribe id {:?}", id);
         self.root().get_subscription(id).await
     }
 
     /// Cancels a subscription given the subscription ID.
     #[cfg(feature = "pubsub")]
     async fn unsubscribe(&self, id: U256) -> TransportResult<()> {
+        println!("unsubscribing  (in trait provider) id {:?}", id);
         self.root().unsubscribe(id)
     }
 
